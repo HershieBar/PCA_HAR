@@ -10,4 +10,6 @@ This is my GitHub page with interactive Plotly graphs.  sfvfdg
 
 <iframe src="Scree_Plot.html" width="800" height="600"></iframe>
 
-<iframe src="PC_Plots.html" style="display: block; margin-left: 0; margin-right: auto;" width="2400" height="600"></iframe>
+<div style="text-align: left;">
+    <iframe src="PC_Plots.html" width="2400" height="600" style="border: none;"></iframe>
+</div>
