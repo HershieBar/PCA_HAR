@@ -1,6 +1,6 @@
 PCA of Human Activity Recognition Dataset
 
-This is my GitHub page with interactive Plotly graphs. dgfhfdgfd   
+This is my GitHub page with interactive Plotly graphs.    
 
 
 <iframe src="Histogram.html" width="800" height="600"></iframe>
@@ -8,8 +8,10 @@ This is my GitHub page with interactive Plotly graphs. dgfhfdgfd
 
 <iframe src="Histo_MP.html" width="800" height="600"></iframe>
 
+<div align="left">
 <iframe src="Scree_Plot.html" width="800" height="600"></iframe>
+</div>
 
-<div align="center">
+<div align="left">
     <iframe src="PC_Plots.html" width="2400" height="600" style="border: none; float: left;"></iframe>
 </div>
