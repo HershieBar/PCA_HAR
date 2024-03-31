@@ -1,17 +1,13 @@
 PCA of Human Activity Recognition Dataset
 
-This is my GitHub page with interactive Plotly graphs.     
+This is my GitHub page with interactive Plotly graphs 22.     
 
-
-<iframe src="Histogram.html" width="800" height="600"></iframe>
-
-
-<iframe src="Histo_MP.html" width="800" height="600"></iframe>
 
 <div style="display: flex; justify-content: left;">
+    <iframe src="Histogram.html" width="800" height="600"></iframe>
+    <iframe src="Histo_MP.html" width="800" height="600"></iframe>
     <iframe src="Scree_Plot.html" width="800" height="600"></iframe>
+    <iframe src="PC_Plots.html" width="2400" height="600"  style="border: none; float: left;"></iframe>
 </div>
 
-<div class = "left">
-    <iframe src="PC_Plots.html" width="2400" height="600" style="border: none; float: left;"></iframe>
-</div>
+
