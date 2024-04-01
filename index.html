@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>PCA Human Activity Recognition</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href=""> 
+        <style>
+
+            h1 {
+                color: red; text-align: auto;
+            }
+            table, th, td {
+                border:1px solid black;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .container {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .boxes {
+                width: 25%;
+                height: 180px;
+                margin: 8px 10px;
+;
+            }
+        </style>
+        
+    </head>
+<body>
+    <h1>
+        Introduction
+    </h1>
+
+    <p>
+        Principal Component Analysis (PCA) is a statistical procedure that transforms a set of observations of possibly correlated variables into a set of values of linearly 
+        uncorrelated variables called principal components.This technique is widely used in the reduction of high feature datasets, which then can be used for making predictive 
+        models. It is particularly useful in processing data where multicollinearity may be a problem, or before machine learning applications to enhance performance and reduce
+        computational costs. With this we will explore how to use and interpret the reduced dataset produced by PCA using the Human Activity Recognition Using Smartphone 
+        dataeset.The HAR dataset contains time and frequency domain variables extracted from smartphone sensor signals (accelerometer and gyroscope) while subjects performed 
+        activities like walking, sitting, standing, etc. This dataset is often used for building models that can recognize human activities based on sensor data.   
+    </p>
+
+    <h1>
+        Data Manipulation 
+    </h1>
+    
+    <p>
+        There were 2 features that were discarded/changed. The feature that was discarded was the volunteer number since there was no characteristics that was provided about 
+        the person, so nothing can be concluded from the data about the motion under different personal characteristics such as height, weight, age, and other factors that can
+        vary in an individuals movement, as these were not given. Further we are not intersted in individual variances of the above recorded activity and only want to see 
+        patterns in the motion of said activities. The other feature that was changed was Activity, which was a qualitative measurement, which was converted into numerical 
+        values (Standing = 1, Sitting = 2, etc) to code the data
+    </p>
+
+    <h1>
+        PCA Methodology 
+    </h1>
+
+    <p>
+        As mentioned before PCA is an algorithm that reduces the dimensionality (i.e Features) of a dataset. Our goal using this algorithm is to find the eigenvalues that result in the most 
+        variance in the data and the resulting eigenvectors will be our *Principal Components*. To find these eigenvalues, we must first normalize the dataset to ensure each data point is 
+        uniformly scaled as features that have high ranges of values will dominate over lower ranges of values, resulting in biased Principal Components. We then create a Covariance Matrix with 
+        our centered data and find the eigenvalues of that matrix. After that, we determine the eigen-outliers and create our Principal Component graphs   
+
+    </p>
+    <div class='Histogram' style="text-align: center;">
+        <iframe src="Histogram.html" width="1200" height="500" style="border: none; margin: 0 auto; display: block;"></iframe>
+ 
+    </div>
+
+    <p>
+        These are the resulting eigenvalues of our covariance matrix segmented into bins. Graphically we can see that there are 3 eigen-outliers in this graph, however, we do not know if all of these 
+        values are truely signals to the data. To verify if these values are in fact are PCs, we will use the Marchenko-Pastur Distribution, which will produce asymtopical behavior
+        that allows us to interpret which eigenvalues are our signals. 
+    </p>
+
+        
+    <div class='Histo_MP' style="text-align: center;">
+        <iframe src="Histo_MP.html" width="1000" height="600" style="border: none; margin: 0 auto; display: block;"></iframe>
+    </div>
+
+    <h4>
+        Marchenko-Pastur Distribution Analysis
+    </h4>
+
+    <p>
+        Even though the Marchenko-Pastur Distribution does not fit nicely with the data, this tells us enough about which eigenvalues are noise and signals. First off we can 
+        conclude that the eigen-outliers are 2.62990497, 2.89280617, 36.8986122, as they are outside the upper bound of the distribution meaning that these eigenvalues are our Prinicipal Components. 
+        Anything under the distribution tells us that these eigenvalues noise and contribute little to no signal to the actual data. The eigenvalues below the lower bound of the Marcenko 
+        Distribution have the are not included as being PC's because these values are very small, meaning that they have a weak signal-to-noise ratio, as there is some information associated with these 
+        eigenvalues, however it is a small contribution to the overall variance/infomration to the dataset. And not including these eigenvalues would not significantly influnece our data reduction. 
+        
+    </p>
+
+    <h1>
+        Principal Components
+    </h1>
+    <p>
+        Here is the list of the top 5 linear combinations that make up each PC.
+    </p> 
+
+    <table style="width:50%">
+
+        <tr>
+            <th>Principal Component 1</th>
+            <th>Principal Component 2</th>
+            <th>Principal Component 3</th>
+        </tr>
+        <tr>
+            <td> tGravityAcc-energy()-X: 0.34954</td>
+            <td>Activity: -0.3063811681196394</td>
+            <td>tGravityAcc-mean()-X: 0.25527</td>
+            
+            
+        </tr>
+        <tr>
+            <td>Activity: 0.3026091169850696</td>
+            <td>tBodyGyroMag-entropy(): 0.13315</td>
+            <td>fBodyAcc-kurtosis()-X: 0.13230</td>
+            
+            
+        </tr>
+        <tr>
+            <td>Activity: 0.23134249871799348</td>
+            <td>fBodyAccJerk-entropy()-X: 0.12193</td>
+            <td>fBodyAccJerk-entropy()-Y: 0.11898</td>
+            
+            
+        </tr>
+        <tr>
+            <td>angle(X,gravityMean): -0.25275</td>
+            <td>fBodyAcc-skewness()-Z: 0.12814</td>
+            <td>tBodyAccJerkMag-entropy(): 0.11719</td>
+        </tr>
+        <tr>
+            <td>tGravityAcc-max()-X: 0.25181</td>
+            <td>tGravityAcc-energy()-X: -0.12433</td>
+            <td>fBodyAcc-entropy()-X: 0.11711</td>
+        </tr>
+
+      </table>
+      
+
+ 
+    <div class="container">
+        <div class="boxes">
+            <h2>PC 1</h2>
+            <p>
+                tGravityAcc-energy()-X: This feature has the highest positive loading and represents the energy of the gravity acceleration signal in the X-direction. The fact that this feature dominates 
+                PC1 suggests that this component captures variations in the acceleration due to gravity, which is likely to differ across activities like standing, sitting, or lying down. <br><br>
+                
+                Activity: With a negative loading, the 'Activity' feature seems to be an identifier or numerical code that distinguishes between different activities. Its negative sign suggests that as the
+                'Activity' variable increases, the 'tGravityAcc-energy()-X' tends to decrease, indicating an inverse relationship in the activity coding or intensity.<br><br>
+                
+                tGravityAcc-mean()-X: This represents the average gravity acceleration in the X-direction. Similar to the energy, this suggests that PC1 is heavily influenced by how the orientation of the
+                device (and by extension, the user's body) changes with different activities.<br><br>
+                
+                angle(X,gravityMean): The angle between the X-axis and the gravity vector has a significant influence on PC1 with a negative loading, indicating that changes in this angle are important in
+                differentiating between activities.<br><br>
+                
+                tGravityAcc-max()-X: The maximum value of gravity acceleration in the X-direction also contributes significantly to PC1. This further emphasizes the importance of static and transitional 
+                aspects of the user's orientation relative to gravity in this component.<br><br>
+            </p>
+        </div>
+
+        <div class="boxes">
+            <h2>PC 2</h2>
+            <p> 
+                Activity: This feature appears again with a positive loading, confirming its importance in discriminating between different activities across multiple components.<br><br>
+        
+                tBodyGyroMag-entropy(): The entropy of the gyroscope magnitude reflects the complexity or randomness of the gyroscope signal. A higher value could indicate more complex body motion,
+                possibly associated with dynamic activities like walking or running.<br><br>
+                
+                fBodyAcc-kurtosis()-X: This measures the 'tailedness' of the frequency domain signal from body acceleration in the X-direction. It's interesting that PC2 relates to both frequency 
+                (fBodyAcc) and time (tBodyGyro) domain features, suggesting a blend of dynamic movement and signal properties.<br><br>
+                
+                fBodyAcc-skewness()-Z: This represents the asymmetry of the body acceleration frequency distribution in the Z-direction. Skewness can indicate the directionality of movement, which 
+                might differentiate activities such as walking upstairs vs downstairs.<br><br>
+                
+                tGravityAcc-energy()-X: The negative loading of gravity acceleration energy in the X-direction, which contrasts with its positive contribution in PC1, suggesting that PC2 may capture
+                different aspects of motion or orientation changes.<br><br>
+            </p>
+        </div>
+
+        <div class="boxes">
+            <h2>PC 3</h2>
+            <p>
+                Activity: Yet again, 'Activity' appears, which implies that even after accounting for orientation and entropy features, the type of activity remains a significant factor in the data's 
+                variability.<br><br>
+                
+                fBodyAccJerk-entropy()-X and fBodyAccJerk-entropy()-Y: The entropy of body linear acceleration (jerk signals) in both X and Y directions suggests that PC3 may be capturing the irregularity
+                and complexity of motion changes, as jerk signals are indicative of sudden movements which differ between activities.<br><br>
+                
+                tBodyAccJerkMag-entropy(): This is the entropy of the magnitude of body acceleration jerk, which further supports the notion that PC3 is capturing the nuances of transient, possibly 
+                abrupt movements.<br><br>
+                
+                fBodyAcc-entropy()-X: This feature measures the randomness in the frequency domain of the body acceleration signal in the X-direction, implying that PC3 is sensitive to both sudden 
+                movements and the structured patterns in the frequency domain. <br><br>
+            </p>
+        </div>
+    </div>    
+
+
+        
+    <div class='PC_Plots' style="padding-left: 15%; padding-top: 10%;">
+        <iframe src="PC_Plots.html" style="width: 100%; height: 700px; border: none;"></iframe>
+    </div>
+
+
+</body>
+</html>
