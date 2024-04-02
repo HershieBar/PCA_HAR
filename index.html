@@ -39,6 +39,10 @@
                 margin: 10px; /* Space between boxes */
                 box-sizing: border-box; /* Includes padding and border in the element's total width and height */
             }
+
+            .main {
+                margin: 0 350px 0 350px 
+            }
         
 
         
@@ -63,251 +67,260 @@
         
     </head>
 <body>
-    <h1>
-        Introduction
-    </h1>
 
-    <p>
-        Principal Component Analysis (PCA) is a statistical procedure that transforms a set of observations of possibly correlated variables into a set of values of linearly 
-        uncorrelated variables called principal components.This technique is widely used in the reduction of high feature datasets, which then can be used for making predictive 
-        models. It is particularly useful in processing data where multicollinearity may be a problem, or before machine learning applications to enhance performance and reduce
-        computational costs. With this we will explore how to use and interpret the reduced dataset produced by PCA using the Human Activity Recognition Using Smartphone 
-        dataeset.The HAR dataset contains time and frequency domain variables extracted from smartphone sensor signals (accelerometer and gyroscope) while subjects performed 
-        activities like walking, sitting, standing, etc. This dataset is often used for building models that can recognize human activities based on sensor data.   
-    </p>
+     <div class="main">
 
-    <h1>
-        Data Manipulation 
-    </h1>
-    
-    <p>
-        There were 2 features that were discarded/changed. The feature that was discarded was the volunteer number since there was no characteristics that was provided about 
-        the person, so nothing can be concluded from the data about the motion under different personal characteristics such as height, weight, age, and other factors that can
-        vary in an individuals movement, as these were not given. Further we are not intersted in individual variances of the above recorded activity and only want to see 
-        patterns in the motion of said activities. The other feature that was changed was Activity, which was a qualitative measurement, which was converted into numerical 
-        values (Standing = 1, Sitting = 2, etc) to code the data.
-    </p>
+  
+        <h1>
+            Introduction
+        </h1>
 
-    <h1>
-        PCA Methodology 
-    </h1>
-
-    <p>
-        As mentioned before PCA is an algorithm that reduces the dimensionality (Features) of a dataset. Our goal using this algorithm is to find the eigenvalues that result in the most 
-        variance in the data and the resulting eigenvectors will be our Principal Components. And with these Principal Components, it'll capture the most important features of the dataset. 
-        To find these eigenvalues, we must first normalize the dataset to ensure each data point is uniformly scaled as features that have high ranges of values will dominate over lower 
-        ranges of values, resulting in biased Principal Components. We then create a Covariance Matrix with our centered data and find the eigenvalues of that matrix. After that, we determine 
-        the eigen-outliers and create our Principal Component graphs.
-
-    </p>
-    <div class='Histogram' style="text-align: center;">
-        <iframe src="Histogram.html" width="1200" height="500" style="border: none; margin: 0 auto; display: block;"></iframe>
- 
-    </div>
-
-    <p>
-        These are the resulting eigenvalues of our covariance matrix segmented into bins. Graphically we can see that there are 3 eigen-outliers in this graph, however, we do not know if all of these 
-        values are truely signals to the data. To verify if these values are in fact are PCs, we will use the Marchenko-Pastur Distribution, which will produce asymtopical behavior
-        that allows us to interpret which eigenvalues are our signals. 
-    </p>
-
-        
-    <div class='Histo_MP' style="text-align: center;">
-        <iframe src="Histo_MP.html" width="1000" height="600" style="border: none; margin: 0 auto; display: block;"></iframe>
-    </div>
-
-    <h4>
-        Marchenko-Pastur Distribution Analysis
-    </h4>
-
-    <p>
-        Even though the Marchenko-Pastur Distribution does not fit nicely with the data, this tells us enough about which eigenvalues are noise and signals. First off we can 
-        conclude that the eigen-outliers are 2.62990497, 2.89280617, 36.8986122, as they are outside the upper bound of the distribution meaning that these eigenvalues are our Prinicipal Components. 
-        Anything under the distribution tells us that these eigenvalues noise and contribute little to no signal to the actual data. The eigenvalues below the lower bound of the Marcenko 
-        Distribution have the are not included as being PC's because these values are very small, meaning that they have a weak signal-to-noise ratio, as there is some information associated with these 
-        eigenvalues, however it is a small contribution to the overall variance/infomration to the dataset. And not including these eigenvalues would not significantly influnece our data reduction. 
-        
-    </p>
-
-    <h1>
-        Principal Components
-    </h1>
-    <p>
-        Here is a list of the top 5 linear combinations that make up each PC, where largest magnitude shows what influences the Principal Component the most.
-    </p> 
-
-    <table style="width:50%">
-
-        <tr>
-            <th>Principal Component 1</th>
-            <th>Principal Component 2</th>
-            <th>Principal Component 3</th>
-        </tr>
-        <tr>
-            <td> tGravityAcc-energy()-X: 0.34954</td>
-            <td>Activity: -0.3063811681196394</td>
-            <td>tGravityAcc-mean()-X: 0.25527</td>
-            
-            
-        </tr>
-        <tr>
-            <td>Activity: 0.3026091169850696</td>
-            <td>tBodyGyroMag-entropy(): 0.13315</td>
-            <td>fBodyAcc-kurtosis()-X: 0.13230</td>
-            
-            
-        </tr>
-        <tr>
-            <td>Activity: 0.23134249871799348</td>
-            <td>fBodyAccJerk-entropy()-X: 0.12193</td>
-            <td>fBodyAccJerk-entropy()-Y: 0.11898</td>
-            
-            
-        </tr>
-        <tr>
-            <td>angle(X,gravityMean): -0.25275</td>
-            <td>fBodyAcc-skewness()-Z: 0.12814</td>
-            <td>tBodyAccJerkMag-entropy(): 0.11719</td>
-        </tr>
-        <tr>
-            <td>tGravityAcc-max()-X: 0.25181</td>
-            <td>tGravityAcc-energy()-X: -0.12433</td>
-            <td>fBodyAcc-entropy()-X: 0.11711</td>
-        </tr>
-
-      </table>
-      
-
- 
-    <div class="container">
-        <div class="boxes">
-            <h2>PC 1</h2>
-            <p>
-                tGravityAcc-energy()-X: This feature has the highest positive loading and represents the energy of the gravity acceleration signal in the X-direction. The fact that this feature dominates 
-                PC1 suggests that this linear combination captures variations in the acceleration due to gravity, which is likely to differ across activities like standing, sitting, or lying down. <br><br>
-                
-                Activity: Because the activity feature is negative, it suggests that as the movements of the subject becomes more dynamic (Standing &#8594; Sitting &#8594; Laying, etc), 
-                there will be an inverse relationship between the positive features of the linear combinations of PC 1. For example, the feature 'tGravityAcc-energy()-X' will tend to decrease, 
-                as the type of activity increases.<br><br>
-                
-                tGravityAcc-mean()-X: This represents the average gravity acceleration in the X-direction. Similar to the energy, this suggests that PC1 is influenced by how the orientation of the
-                device (and by extension, the user's body) changes with different activities.<br><br>
-                
-                angle(X,gravityMean): The angle between the X-axis and the gravity vector has an influence on PC1 with a negative loading, indicating that changes in this angle are important in
-                differentiating between activities.<br><br>
-                
-                tGravityAcc-max()-X: This feature tells us the maximum value of gravity acceleration in the X-direction and the static and transitional 
-                aspects of the user's orientation relative to gravity.<br><br>
-            </p>
-        </div>
-
-        <div class="boxes">
-            <h2>PC 2</h2>
-            <p> 
-                Activity: This feature appears again with a positive loading this time, and it's top feature that influences the PC the most. <br><br>
-        
-                tBodyGyroMag-entropy(): The entropy of the gyroscope magnitude reflects the complexity or randomness of the gyroscope signal. A higher value could indicate more complex body motion,
-                possibly associated with dynamic activities like walking or even laying down.<br><br>
-                
-                fBodyAcc-kurtosis()-X: This measures the 'tailedness' of the frequency domain signal from body acceleration in the X-direction. It's interesting that PC2 relates to both frequency 
-                (fBodyAcc) and time (tBodyGyro) domain features, suggesting a blend of dynamic movement and signal properties.<br><br>
-                
-                fBodyAcc-skewness()-Z: This represents the asymmetry of the body acceleration frequency distribution in the Z-direction. Skewness can indicate the directionality of movement, which 
-                might differentiate activities such as walking upstairs vs downstairs.<br><br>
-                
-                tGravityAcc-energy()-X: The negative loading of gravity acceleration energy in the X-direction, which contrasts with its positive contribution in PC1, suggesting that PC2 may capture
-                different aspects of motion or orientation changes.<br><br>
-            </p>
-        </div>
-
-        <div class="boxes">
-            <h2>PC 3</h2>
-            <p>
-                Activity: Yet again, 'Activity' appears with positive loading and it being a top feature of PC 3. <br><br>
-                
-                fBodyAccJerk-entropy()-X and fBodyAccJerk-entropy()-Y: The entropy of body linear acceleration (jerk signals) in both X and Y directions suggests that PC3 may be capturing the irregularity
-                and complexof motion changes, as jerk signals are indicative of sudden movements which differ between activities.<br><br>
-                
-                tBodyAccJerkMag-entropy(): This is the entropy of the magnitude of body acceleration jerk, which further supports the notion that PC3 is capturing the nuances of transient, possibly 
-                abrupt movements.<br><br>
-                
-                fBodyAcc-entropy()-X: This feature measures the randomness in the frequency domain of the body acceleration signal in the X-direction, implying that PC3 is sensitive to both sudden 
-                movements and the structured patterns in the frequency domain. <br><br>
-            </p>
-        </div>
-    </div>    
-
-
-        
-    <div class='PC_Plots' style="padding-left: 15%;">
-        <iframe src="PC_Plots.html" style="width: 100%; height: 700px; border: none;"></iframe>
-    </div>
-
-    <div class="container">
-        <div class="boxes">
-            <h2>PC 1 vs PC 2</h2>
-            <p>
-                We can observe that there are distinct clustering of activities, in which our x-axis (PC 1) effectively captures variances due to gravitational features. The spread along PC1 
-                showcases how certain activities, like static movements like standing and sitting, are more influenced by gravitational acceleration in the X-direction as they are 
-                densely packed on one side of the plot. However, laying down is was not as affected by this acceleration. This can be due to the fact that the phone is attached to the 
-                volunteer's waist, meaning that the phone's X-axis would be perpendicular to the gravity vector. Leading to tGravityAcc-energy()-X being low, as gravity would not be 
-                acting significantly along the X-axis. Laying has distinctly higher PC2 scores compared to other movements, which can be the result of people turing their heads before 
-                laying down.  In contrast, dynamic activities that involve more complex movements are dispersed along the PC2, which might be picking up on the entropy and complexity of 
-                movements reflected in the sensor signals from the gyroscope and body acceleration. 
-            </p>
-        </div>
-
-        <div class="boxes">
-            <h2>PC 1 vs PC 3</h2>
-            <p> 
-                Here we see a clustering of dynmaic activities and clustering of static activities. We can also observe that there is a lot more sudden movements while walking downstairs, 
-                compared to the other dynamic movements which makes sense considering that it produced a lot suddent movement. Moving to the positive side along the PC1 axis, we see a gradual 
-                transition to more dynamic activities, such as walking, walking downstairs, and walking upstairs. These activities are represented by data points that extend further to the right, 
-                indicating increased variability in gravity acceleration features, such as the energy and maximum values in the X-direction, which one would expect to differ with varying activity 
-                intensities and orientations.<br><br>
-
-                On the vertical axis, PC3 introduces another dimension of data variance, which encapsulates aspects of movement irregularity and complexity, particularly as indicated by jerk 
-                signals. The plot shows a spread of activities along PC3, with more static activities like standing, sitting, and lying down occupying the lower section, suggesting lower entropy 
-                and less sudden movement. In contrast, the higher region of PC3 is populated by the more dynamic activities, which are associated with higher jerk signal entropy, reflecting the 
-                transient and abrupt movements inherent to walking and navigating stairs.<br><br>
-                
-                Notably, both static and dynamic activities clustered in the lower section of the plot have a narrower dispersion along the PC3 axis, signifying that while their sensor signals vary in terms 
-                of orientation, they share a common feature of having fewer transient and sudden movements. 
-            </p>
-        </div>
-
-        <div class="boxes">
-            <h2>PC 2 vs PC 3</h2>
-            <p>
-                The scatter plot for PC2 vs PC3 shows a clear separation of clusters, each representing different activities. The segregation suggests that these two principal components 
-                effectively capture the variance between activities based on sensor signals. <br><br>
-
-                We observe a cluster that corresponds to more dynamic activities, such as walking, walking downstairs, and walking upstairs. This is because more dynamic activities would naturally 
-                result in higher entropy and kurtosis in the body acceleration signals, both of which are important features in PC2 and PC3. These activities tend to have higher values along 
-                both PC2 and PC3 axes, indicating complex, irregular, and sudden movements that are characteristic of these types of motion. Contrastingly, the lower left quadrant of the plot, 
-                which has lower values for both PC2 and PC3, likely correlates with more static activities like standing, sitting, and laying. The low entropy values captured by these components 
-                for such activities imply less complex motion patterns and a lower degree of randomness or sudden changes in the accelerometer and gyroscope signals. <br><br>
-                
-                Moreover, the plot demonstrates that while PC2 captures more of the fine-grained details related to body gyroscopic movements and frequency domain features from body acceleration, 
-                PC3 seems to emphasize the transient and abrupt movements as shown by the jerk signals. The activities that involve transitional movements, such as sitting to lying down, may be 
-                represented in the regions that show a mix of moderate values on both PC2 and PC3, indicating a blend of complexity and suddenness in movement, albeit less pronounced than in the 
-                dynamic activities.
-            </p>
-        </div>
-
-    </div>
-
-
-    <div class="conclusion">
-        <h1>Conclusion</h1>
-    </div>
-    <div>
         <p>
+            Principal Component Analysis (PCA) is a statistical procedure that transforms a set of observations of possibly correlated variables into a set of values of linearly 
+            uncorrelated variables called principal components.This technique is widely used in the reduction of high feature datasets, which then can be used for making predictive 
+            models. It is particularly useful in processing data where multicollinearity may be a problem, or before machine learning applications to enhance performance and reduce
+            computational costs. With this we will explore how to use and interpret the reduced dataset produced by PCA using the Human Activity Recognition Using Smartphone 
+            dataeset.The HAR dataset contains time and frequency domain variables extracted from smartphone sensor signals (accelerometer and gyroscope) while subjects performed 
+            activities like walking, sitting, standing, etc. This dataset is often used for building models that can recognize human activities based on sensor data.   
+        </p>
 
+        <h1>
+            Data Manipulation 
+        </h1>
+        
+        <p>
+            There were 2 features that were discarded/changed. The feature that was discarded was the volunteer number since there was no characteristics that was provided about 
+            the person, so nothing can be concluded from the data about the motion under different personal characteristics such as height, weight, age, and other factors that can
+            vary in an individuals movement, as these were not given. Further we are not intersted in individual variances of the above recorded activity and only want to see 
+            patterns in the motion of said activities. The other feature that was changed was Activity, which was a qualitative measurement, which was converted into numerical 
+            values (Standing = 1, Sitting = 2, etc) to code the data.
+        </p>
+
+        <h1>
+            PCA Methodology 
+        </h1>
+
+        <p>
+            As mentioned before PCA is an algorithm that reduces the dimensionality (Features) of a dataset. Our goal using this algorithm is to find the eigenvalues that result in the most 
+            variance in the data and the resulting eigenvectors will be our Principal Components. And with these Principal Components, it'll capture the most important features of the dataset. 
+            To find these eigenvalues, we must first normalize the dataset to ensure each data point is uniformly scaled as features that have high ranges of values will dominate over lower 
+            ranges of values, resulting in biased Principal Components. We then create a Covariance Matrix with our centered data and find the eigenvalues of that matrix. After that, we determine 
+            the eigen-outliers and create our Principal Component graphs.
 
         </p>
-    </div>
+        <div class='Histogram' style="text-align: center;">
+            <iframe src="Histogram.html" width="1200" height="500" style="border: none; margin: 0 auto; display: block;"></iframe>
+    
+        </div>
 
+        <p>
+            These are the resulting eigenvalues of our covariance matrix segmented into bins. Graphically we can see that there are 3 eigen-outliers in this graph, however, we do not know if all of these 
+            values are truely signals to the data. To verify if these values are in fact are PCs, we will use the Marchenko-Pastur Distribution, which will produce asymtopical behavior
+            that allows us to interpret which eigenvalues are our signals. 
+        </p>
+
+            
+        <div class='Histo_MP' style="text-align: center;">
+            <iframe src="Histo_MP.html" width="1000" height="600" style="border: none; margin: 0 auto; display: block;"></iframe>
+        </div>
+
+        <h4>
+            Marchenko-Pastur Distribution Analysis
+        </h4>
+
+        <p>
+            Even though the Marchenko-Pastur Distribution does not fit nicely with the data, this tells us enough about which eigenvalues are noise and signals. First off we can 
+            conclude that the eigen-outliers are 2.62990497, 2.89280617, 36.8986122, as they are outside the upper bound of the distribution meaning that these eigenvalues are our Prinicipal Components. 
+            Anything under the distribution tells us that these eigenvalues noise and contribute little to no signal to the actual data. The eigenvalues below the lower bound of the Marcenko 
+            Distribution have the are not included as being PC's because these values are very small, meaning that they have a weak signal-to-noise ratio, as there is some information associated with these 
+            eigenvalues, however it is a small contribution to the overall variance/infomration to the dataset. And not including these eigenvalues would not significantly influnece our data reduction. 
+            
+        </p>
+
+        <h1>
+            Principal Components
+        </h1>
+        <p>
+            Here is a list of the top 5 linear combinations that make up each PC, where largest magnitude shows what influences the Principal Component the most.
+        </p> 
+
+        <table style="width:50%">
+
+            <tr>
+                <th>Principal Component 1</th>
+                <th>Principal Component 2</th>
+                <th>Principal Component 3</th>
+            </tr>
+            <tr>
+                <td> tGravityAcc-energy()-X: 0.34954</td>
+                <td>Activity: -0.3063811681196394</td>
+                <td>tGravityAcc-mean()-X: 0.25527</td>
+                
+                
+            </tr>
+            <tr>
+                <td>Activity: 0.3026091169850696</td>
+                <td>tBodyGyroMag-entropy(): 0.13315</td>
+                <td>fBodyAcc-kurtosis()-X: 0.13230</td>
+                
+                
+            </tr>
+            <tr>
+                <td>Activity: 0.23134249871799348</td>
+                <td>fBodyAccJerk-entropy()-X: 0.12193</td>
+                <td>fBodyAccJerk-entropy()-Y: 0.11898</td>
+                
+                
+            </tr>
+            <tr>
+                <td>angle(X,gravityMean): -0.25275</td>
+                <td>fBodyAcc-skewness()-Z: 0.12814</td>
+                <td>tBodyAccJerkMag-entropy(): 0.11719</td>
+            </tr>
+            <tr>
+                <td>tGravityAcc-max()-X: 0.25181</td>
+                <td>tGravityAcc-energy()-X: -0.12433</td>
+                <td>fBodyAcc-entropy()-X: 0.11711</td>
+            </tr>
+
+        </table>
+        
+
+    
+        <div class="container">
+            <div class="boxes">
+                <h2>PC 1</h2>
+                <p>
+                    tGravityAcc-energy()-X: This feature has the highest positive loading and represents the energy of the gravity acceleration signal in the X-direction. The fact that this feature dominates 
+                    PC1 suggests that this linear combination captures variations in the acceleration due to gravity, which is likely to differ across activities like standing, sitting, or lying down. <br><br>
+                    
+                    Activity: Because the activity feature is negative, it suggests that as the movements of the subject becomes more dynamic (Standing &#8594; Sitting &#8594; Laying, etc), 
+                    there will be an inverse relationship between the positive features of the linear combinations of PC 1. For example, the feature 'tGravityAcc-energy()-X' will tend to decrease, 
+                    as the type of activity increases.<br><br>
+                    
+                    tGravityAcc-mean()-X: This represents the average gravity acceleration in the X-direction. Similar to the energy, this suggests that PC1 is influenced by how the orientation of the
+                    device (and by extension, the user's body) changes with different activities.<br><br>
+                    
+                    angle(X,gravityMean): The angle between the X-axis and the gravity vector has an influence on PC1 with a negative loading, indicating that changes in this angle are important in
+                    differentiating between activities.<br><br>
+                    
+                    tGravityAcc-max()-X: This feature tells us the maximum value of gravity acceleration in the X-direction and the static and transitional 
+                    aspects of the user's orientation relative to gravity.<br><br>
+                </p>
+            </div>
+
+            <div class="boxes">
+                <h2>PC 2</h2>
+                <p> 
+                    Activity: This feature appears again with a positive loading this time, and it's top feature that influences the PC the most. <br><br>
+            
+                    tBodyGyroMag-entropy(): The entropy of the gyroscope magnitude reflects the complexity or randomness of the gyroscope signal. A higher value could indicate more complex body motion,
+                    possibly associated with dynamic activities like walking or even laying down.<br><br>
+                    
+                    fBodyAcc-kurtosis()-X: This measures the 'tailedness' of the frequency domain signal from body acceleration in the X-direction. It's interesting that PC2 relates to both frequency 
+                    (fBodyAcc) and time (tBodyGyro) domain features, suggesting a blend of dynamic movement and signal properties.<br><br>
+                    
+                    fBodyAcc-skewness()-Z: This represents the asymmetry of the body acceleration frequency distribution in the Z-direction. Skewness can indicate the directionality of movement, which 
+                    might differentiate activities such as walking upstairs vs downstairs.<br><br>
+                    
+                    tGravityAcc-energy()-X: The negative loading of gravity acceleration energy in the X-direction, which contrasts with its positive contribution in PC1, suggesting that PC2 may capture
+                    different aspects of motion or orientation changes.<br><br>
+                </p>
+            </div>
+
+            <div class="boxes">
+                <h2>PC 3</h2>
+                <p>
+                    Activity: Yet again, 'Activity' appears with positive loading and it being a top feature of PC 3. <br><br>
+                    
+                    fBodyAccJerk-entropy()-X and fBodyAccJerk-entropy()-Y: The entropy of body linear acceleration (jerk signals) in both X and Y directions suggests that PC3 may be capturing the irregularity
+                    and complexof motion changes, as jerk signals are indicative of sudden movements which differ between activities.<br><br>
+                    
+                    tBodyAccJerkMag-entropy(): This is the entropy of the magnitude of body acceleration jerk, which further supports the notion that PC3 is capturing the nuances of transient, possibly 
+                    abrupt movements.<br><br>
+                    
+                    fBodyAcc-entropy()-X: This feature measures the randomness in the frequency domain of the body acceleration signal in the X-direction, implying that PC3 is sensitive to both sudden 
+                    movements and the structured patterns in the frequency domain. <br><br>
+                </p>
+            </div>
+        </div>    
+
+
+            
+        <div class='PC_Plots' >
+            <iframe src="PC_Plots.html" style="width: 100%; height: 700px; border: none;"></iframe>
+        </div>
+
+        <div class="container">
+            <div class="boxes">
+                <h2>PC 1 vs PC 2</h2>
+                <p>
+                    We can observe that there are distinct clustering of activities, in which our x-axis (PC 1) effectively captures variances due to gravitational features. The spread along PC1 
+                    showcases how certain activities, like static movements like standing and sitting, are more influenced by gravitational acceleration in the X-direction as they are 
+                    densely packed on one side of the plot. However, laying down is was not as affected by this acceleration. This can be due to the fact that the phone is attached to the 
+                    volunteer's waist, meaning that the phone's X-axis would be perpendicular to the gravity vector. Leading to tGravityAcc-energy()-X being low, as gravity would not be 
+                    acting significantly along the X-axis. Laying has distinctly higher PC2 scores compared to other movements, which can be the result of people turing their heads before 
+                    laying down.  In contrast, dynamic activities that involve more complex movements are dispersed along the PC2, which might be picking up on the entropy and complexity of 
+                    movements reflected in the sensor signals from the gyroscope and body acceleration. 
+                </p>
+            </div>
+
+            <div class="boxes">
+                <h2>PC 1 vs PC 3</h2>
+                <p> 
+                    Here we see a clustering of dynmaic activities and clustering of static activities. We can also observe that there is a lot more sudden movements while walking downstairs, 
+                    compared to the other dynamic movements which makes sense considering that it produced a lot suddent movement. Moving to the positive side along the PC1 axis, we see a gradual 
+                    transition to more dynamic activities, such as walking, walking downstairs, and walking upstairs. These activities are represented by data points that extend further to the right, 
+                    indicating increased variability in gravity acceleration features, such as the energy and maximum values in the X-direction, which one would expect to differ with varying activity 
+                    intensities and orientations.<br><br>
+
+                    On the vertical axis, PC3 introduces another dimension of data variance, which encapsulates aspects of movement irregularity and complexity, particularly as indicated by jerk 
+                    signals. The plot shows a spread of activities along PC3, with more static activities like standing, sitting, and lying down occupying the lower section, suggesting lower entropy 
+                    and less sudden movement. In contrast, the higher region of PC3 is populated by the more dynamic activities, which are associated with higher jerk signal entropy, reflecting the 
+                    transient and abrupt movements inherent to walking and navigating stairs.<br><br>
+                    
+                    Notably, both static and dynamic activities clustered in the lower section of the plot have a narrower dispersion along the PC3 axis, signifying that while their sensor signals vary in terms 
+                    of orientation, they share a common feature of having fewer transient and sudden movements. 
+                </p>
+            </div>
+
+            <div class="boxes">
+                <h2>PC 2 vs PC 3</h2>
+                <p>
+                    The scatter plot for PC2 vs PC3 shows a clear separation of clusters, each representing different activities. The segregation suggests that these two principal components 
+                    effectively capture the variance between activities based on sensor signals. <br><br>
+
+                    We observe a cluster that corresponds to more dynamic activities, such as walking, walking downstairs, and walking upstairs. This is because more dynamic activities would naturally 
+                    result in higher entropy and kurtosis in the body acceleration signals, both of which are important features in PC2 and PC3. These activities tend to have higher values along 
+                    both PC2 and PC3 axes, indicating complex, irregular, and sudden movements that are characteristic of these types of motion. Contrastingly, the lower left quadrant of the plot, 
+                    which has lower values for both PC2 and PC3, likely correlates with more static activities like standing, sitting, and laying. The low entropy values captured by these components 
+                    for such activities imply less complex motion patterns and a lower degree of randomness or sudden changes in the accelerometer and gyroscope signals. <br><br>
+                    
+                    Moreover, the plot demonstrates that while PC2 captures more of the fine-grained details related to body gyroscopic movements and frequency domain features from body acceleration, 
+                    PC3 seems to emphasize the transient and abrupt movements as shown by the jerk signals. The activities that involve transitional movements, such as sitting to lying down, may be 
+                    represented in the regions that show a mix of moderate values on both PC2 and PC3, indicating a blend of complexity and suddenness in movement, albeit less pronounced than in the 
+                    dynamic activities.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="Conclusion">
+            <h1>Conclusion</h1>
+        </div>
+        <div>
+            <p>
+                The application of Principal Component Analysis (PCA) significantly reduced the dimensionality of the original 563 features in the Human Activity Recognition Using Smartphones 
+                dataset. Resulting in only three principal components with eigenvalues of [2.63, 2.89, 36.90]. These eigenvalues stand out from the noise in the dataset. This reduction highlights 
+                the dataset's intrinsic patterns by capturing the majority of the variance with fewer dimensions, thus enhancing analytical efficiency without significant loss of information. 
+                These principal components, which primarily encapsulate variations in gravity-affected movements, rotational motion, and the complexity of jerk movements among different 
+                activities, allows for a condensed understanding of human activity patterns. The dimension-reduced data can be applied to machine learning models as it improves model training 
+                times and mitigating the risk of overfitting. Allowing us to determine certain activities of individuals through sensory data. 
+
+            </p>
+        </div>
+    </div> 
 
 </body>
 
