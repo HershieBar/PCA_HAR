@@ -18,9 +18,7 @@
                 width: 100%;
             }
         
-            h1 {
-                color: red;
-            }
+
         
             table, th, td {
                 border: 1px solid black;
@@ -103,7 +101,7 @@
         <p>
             As mentioned before PCA is an algorithm that reduces the dimensionality (Features) of a dataset. Our goal using this algorithm is to find the eigenvalues that result in the most 
             variance in the data and the resulting eigenvectors will be our Principal Components. And with these Principal Components, it'll capture the most important features of the dataset. 
-            To find these eigenvalues, we must first normalize the dataset to ensure each data point is uniformly scaled as features that have high ranges of values will dominate over lower 
+            To find these eigenvalues, we must first standarize the dataset (Set mean = 0 and standard deviation = 1) to ensure each data point is uniformly scaled as features that have high ranges of values will dominate over lower 
             ranges of values, resulting in biased Principal Components. We then create a Covariance Matrix with our centered data and find the eigenvalues of that matrix. After that, we determine 
             the eigen-outliers and create our Principal Component graphs.
 
@@ -115,8 +113,8 @@
 
         <p>
             These are the resulting eigenvalues of our covariance matrix segmented into bins. Graphically we can see that there are 3 eigen-outliers in this graph, however, we do not know if all of these 
-            values are truely signals to the data. To verify if these values are in fact are PCs, we will use the Marchenko-Pastur Distribution, which will produce asymtopical behavior
-            that allows us to interpret which eigenvalues are our signals. 
+            values are truely signals to the data. To verify if these values are in fact are PCs, we will use the Marchenko-Pastur Distribution, which will produce a asymtopical behavior
+            that allows us to interpret which of eigenvalues are our signals and noise. 
         </p>
 
             
@@ -129,11 +127,13 @@
         </h4>
 
         <p>
-            Even though the Marchenko-Pastur Distribution does not fit nicely with the data, this tells us enough about which eigenvalues are noise and signals. First off we can 
-            conclude that the eigen-outliers are 2.62990497, 2.89280617, 36.8986122, as they are outside the upper bound of the distribution meaning that these eigenvalues are our Prinicipal Components. 
-            Anything under the distribution tells us that these eigenvalues noise and contribute little to no signal to the actual data. The eigenvalues below the lower bound of the Marcenko 
-            Distribution have the are not included as being PC's because these values are very small, meaning that they have a weak signal-to-noise ratio, as there is some information associated with these 
-            eigenvalues, however it is a small contribution to the overall variance/infomration to the dataset. And not including these eigenvalues would not significantly influnece our data reduction. 
+            This Marchenko-Pastur Distribution shown in red fits decently to our histogram and this tells us enough about which eigenvalues are noise and signals. First off we can 
+            conclude that the eigen-outliers are 2.82904448, 2.93798858, 3.53668428, 8.43312561, 9.27615181,  118.320105 as they are outside the upper bound of the distribution and they have the 
+            greatest magnitude, meaning that these eigenvalues are our Prinicipal Components. On top of that they account for 77.37% of variance in the dataset. And from this distribution we can 
+            conclude that anything under the distribution tells us that these eigenvalues are noise and contribute no signal to the actual data. The eigenvalues below the lower bound of the 
+            Marcenko Distribution can be principal components, however, because these values are very small, meaning that they have a weak signal-to-noise ratio, as there could be information 
+            associated with these eigenvalues about the data; it is a small contribution to the overall variance/infomration to the dataset. And not including these eigenvalues would not 
+            significantly influnece our data reduction. Lets look at the top 3 eigenvalues (8.43312561, 9.27615181,  118.320105) to understand what features are influencing the data the most. 
             
         </p>
 
@@ -151,32 +151,37 @@
                 <th>Principal Component 2</th>
                 <th>Principal Component 3</th>
             </tr>
+
             <tr>
                 <td> tGravityAcc-energy()-X: 0.34954</td>
-                <td>Activity: -0.3063811681196394</td>
-                <td>tGravityAcc-mean()-X: 0.25527</td>
+                <td>Activity: 0.30260</td>
+                <td>Activity: 0.23134</td>
                 
                 
             </tr>
+
             <tr>
-                <td>Activity: 0.3026091169850696</td>
+                <td>Activity: -0.30638</td>
                 <td>tBodyGyroMag-entropy(): 0.13315</td>
-                <td>fBodyAcc-kurtosis()-X: 0.13230</td>
+                <td> fBodyAccJerk-entropy()-X: 0.12193</td>
                 
                 
             </tr>
+
             <tr>
-                <td>tGravityAcc-mean(): 0.23134249871799348</td>
-                <td>fBodyAccJerk-entropy()-X: 0.12193</td>
+                <td>tGravityAcc-mean():  0.25527</td>
+                <td>fBodyAcc-kurtosis()-X: 0.13230</td>
                 <td>fBodyAccJerk-entropy()-Y: 0.11898</td>
                 
                 
             </tr>
+
             <tr>
                 <td>angle(X,gravityMean): -0.25275</td>
                 <td>fBodyAcc-skewness()-Z: 0.12814</td>
                 <td>tBodyAccJerkMag-entropy(): 0.11719</td>
             </tr>
+
             <tr>
                 <td>tGravityAcc-max()-X: 0.25181</td>
                 <td>tGravityAcc-energy()-X: -0.12433</td>
@@ -248,7 +253,7 @@
 
             
         <div class='PC_Plots' >
-            <iframe src="PC_Plots.html" style="width: 100%; height: 700px; border: none;"></iframe>
+            <iframe src="PC_Plots.html" style="width: 1850px; height: 700px; border: none;"></iframe>
         </div>
 
         <div class="container">
@@ -304,19 +309,28 @@
             </div>
 
         </div>
+            <h1>Testing</h1>
+            <div>
+                <p>
+                    To assess the efficacy of the condensed training set, I used Logistic Regression to evaluate its accuracy in predicting activities based on new sensory data, relative to our 
+                    original dataset. Impressively, this dimensionally reduced dataset not only surpassed the original with an accuracy of 95.9% compared to 95.5%, but it also demonstrated a 
+                    substantial increase in computational efficiency, running 82.5% faster   
+                </p>
+            </div>
+        <div>
 
-
-        <div class="Conclusion">
+        </div>
+        <div>
             <h1>Conclusion</h1>
         </div>
         <div>
             <p>
                 The application of Principal Component Analysis (PCA) significantly reduced the dimensionality of the original 563 features in the Human Activity Recognition Using Smartphones 
-                dataset. Resulting in only three principal components with eigenvalues of [2.63, 2.89, 36.90]. These eigenvalues stand out from the noise in the dataset. This reduction highlights 
+                dataset. Resulting in only three principal components with eigenvalues of [2.82, 2.93, 3.53, 8.433, 9.27,  118.32]. These eigenvalues stand out from the noise in the dataset. This reduction highlights 
                 the dataset's intrinsic patterns by capturing the majority of the variance with fewer dimensions, thus enhancing analytical efficiency without significant loss of information. 
                 These principal components, which primarily encapsulate variations in gravity-affected movements, rotational motion, and the complexity of jerk movements among different 
-                activities, allows for a condensed understanding of human activity patterns. The dimension-reduced data can be applied to machine learning models as it improves model training 
-                times and mitigating the risk of overfitting. Allowing us to determine certain activities of individuals through sensory data. 
+                activities, allows for a condensed understanding of human activity patterns. The dimension-reduced data can be applied to other machine learning models as it improves model training 
+                times and mitigating the risk of overfitting. 
 
             </p>
         </div>
