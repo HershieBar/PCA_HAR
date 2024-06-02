@@ -37,6 +37,10 @@
                 margin: 10px; /* Space between boxes */
                 box-sizing: border-box; /* Includes padding and border in the element's total width and height */
             }
+
+            .main {
+                margin: 0 350px 0 350px 
+            }
         
 
         
@@ -130,8 +134,6 @@
             Marcenko Distribution can be principal components, however, because these values are very small, meaning that they have a weak signal-to-noise ratio, as there could be information 
             associated with these eigenvalues about the data; it is a small contribution to the overall variance/infomration to the dataset. And not including these eigenvalues would not 
             significantly influnece our data reduction. Lets look at the top 3 eigenvalues (8.43312561, 9.27615181,  118.320105) to understand what features are influencing the data the most. 
-            
-        </p>
 
         <h1>
             Principal Components
@@ -147,7 +149,6 @@
                 <th>Principal Component 2</th>
                 <th>Principal Component 3</th>
             </tr>
-
             <tr>
                 <td> tGravityAcc-energy()-X: 0.34954</td>
                 <td>Activity: 0.30260</td>
@@ -155,29 +156,23 @@
                 
                 
             </tr>
-
             <tr>
                 <td>Activity: -0.30638</td>
                 <td>tBodyGyroMag-entropy(): 0.13315</td>
                 <td> fBodyAccJerk-entropy()-X: 0.12193</td>
-                
-                
+                  
             </tr>
-
             <tr>
                 <td>tGravityAcc-mean():  0.25527</td>
                 <td>fBodyAcc-kurtosis()-X: 0.13230</td>
                 <td>fBodyAccJerk-entropy()-Y: 0.11898</td>
                 
-                
             </tr>
-
             <tr>
                 <td>angle(X,gravityMean): -0.25275</td>
                 <td>fBodyAcc-skewness()-Z: 0.12814</td>
                 <td>tBodyAccJerkMag-entropy(): 0.11719</td>
             </tr>
-
             <tr>
                 <td>tGravityAcc-max()-X: 0.25181</td>
                 <td>tGravityAcc-energy()-X: -0.12433</td>
@@ -249,7 +244,7 @@
 
             
         <div class='PC_Plots' >
-            <iframe src="PC_Plots.html" style="width: 1850px; height: 700px; border: none;"></iframe>
+            <iframe src="PC_Plots.html" style="width: 100%; height: 700px; border: none;"></iframe>
         </div>
 
         <div class="container">
@@ -305,18 +300,20 @@
             </div>
 
         </div>
-            <h1>Testing</h1>
-            <div>
-                <p>
-                    To assess the efficacy of the condensed training set, I used Logistic Regression to evaluate its accuracy in predicting activities based on new sensory data, relative to our 
-                    original dataset. Impressively, this dimensionally reduced dataset not only surpassed the original with an accuracy of 95.9% compared to 95.5%, but it also demonstrated a 
-                    substantial increase in computational efficiency, running 82.5% faster   
-                </p>
-            </div>
+        <h1>Testing</h1>
         <div>
+            <p>
+                To assess the efficacy of the condensed training set, I used Logistic Regression to evaluate its accuracy in predicting activities based on new sensory data, relative to our 
+                original dataset. Impressively, this dimensionally reduced dataset not only surpassed the original with an accuracy of 95.9% compared to 95.5%, but it also demonstrated a 
+                substantial increase in computational efficiency, running 82.5% faster   
+            </p>
+        </div>
+    <div>
 
         </div>
         <div>
+
+        <div class="Conc    lusion">
             <h1>Conclusion</h1>
         </div>
         <div>
