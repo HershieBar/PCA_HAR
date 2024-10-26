@@ -14,21 +14,12 @@ As mentioned before PCA is an algorithm that reduces the dimensionality (Feature
 
 
 
-```html
-        <div class='Histo_MP' style="text-align: center;">
-            <iframe src="Histo_MP.html" width="1000" height="600" style="border: none; margin: 0 auto; display: block;"></iframe>
-        </div>
-
-```
-
-
-
-![Histogram of Eigenvalues](Histogram.html)
+[View Histo_MP.html](path/to/Histo_MP.html)
 
 These are the resulting eigenvalues of our covariance matrix segmented into bins. Graphically we can see that there are 6 eigen-outliers in this graph, however, we do not know if all of these values are truely signals to the data. To verify if these values are in fact are PCs, we will use the Marchenko-Pastur Distribution, which will produce a asymtopical behavior that allows us to interpret which of eigenvalues are our signals and noise. 
 
 
-![Marchenko-Pastur Distribution](Histo_MP.html)
+[Marchenko-Pastur Distribution](Histo_MP.html)
 
 #### Marchenko-Pastur Distribution Analysis
 
