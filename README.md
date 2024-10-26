@@ -12,6 +12,17 @@ There were 2 features that were discarded/changed. The feature that was discarde
 
 As mentioned before PCA is an algorithm that reduces the dimensionality (Features) of a dataset. Our goal using this algorithm is to find the eigenvalues that result in the most variance in the data and the resulting eigenvectors will be our Principal Components. And with these Principal Components, it'll capture the most important features of the dataset. To find these eigenvalues, we must first standarize the dataset (Set mean = 0 and standard deviation = 1) to ensure each data point is uniformly scaled as features that have high ranges of values will dominate over lower ranges of values, resulting in biased Principal Components. We then create a Covariance Matrix with our centered data and find the eigenvalues of that matrix. After that, we determine the eigen-outliers and create our Principal Component graphs.
 
+
+
+```html
+        <div class='Histo_MP' style="text-align: center;">
+            <iframe src="Histo_MP.html" width="1000" height="600" style="border: none; margin: 0 auto; display: block;"></iframe>
+        </div>
+
+```
+
+
+
 ![Histogram of Eigenvalues](Histogram.html)
 
 These are the resulting eigenvalues of our covariance matrix segmented into bins. Graphically we can see that there are 6 eigen-outliers in this graph, however, we do not know if all of these values are truely signals to the data. To verify if these values are in fact are PCs, we will use the Marchenko-Pastur Distribution, which will produce a asymtopical behavior that allows us to interpret which of eigenvalues are our signals and noise. 
